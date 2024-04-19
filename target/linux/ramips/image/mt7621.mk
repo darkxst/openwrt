@@ -114,7 +114,7 @@ define Build/belkin-header
 endef
 
 define Build/ubnt-erx-factory-image
-	if [ -e $(KDIR)/tmp/$(KERNEL_INITRAMFS_IMAGE) -a "$$(stat -c%s $@)" -lt "$(KERNEL_SIZE)" ]; then \
+	if [ -e $(KDIR)/tmp/$(KERNEL_INITRAMFS_IMAGE) -a "$$(stat -c%s $@)" -lt "3145728" ]; then \
 		echo '21001:7' > $(1).compat; \
 		$(TAR) -cf $(1) --transform='s/^.*/compat/' $(1).compat; \
 		\
@@ -133,7 +133,7 @@ define Build/ubnt-erx-factory-image
 		\
 		$(CP) $(1) $(BIN_DIR)/; \
 	else \
-		echo "WARNING: initramfs kernel image too big, cannot generate factory image (actual $$(stat -c%s $@); max $(KERNEL_SIZE))" >&2; \
+		echo "WARNING: initramfs kernel image too big, cannot generate factory image (actual $$(stat -c%s $@); max 3072k)" >&2; \
 	fi
 endef
 
